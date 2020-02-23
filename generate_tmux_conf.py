@@ -73,6 +73,15 @@ for keymap in keys:
     tmux_conf += gen_left_keys(keymap)
     tmux_conf += gen_right_keys(keymap)
 
+# tmux doesn't seem to like using space as a command, but whatever
+tmux_conf += gen_right_keys(KeyMap("a", "]"))
+tmux_conf += [
+    str(Key("]", "Enter", 1)),
+    str(Key("}", "Enter", 1)),
+    str(Key("C-]", "Enter", 1)),
+    # C-} Doesn't exist apparently
+]
+
 TMUX_CONF_PATH = os.path.expanduser("~") + "/.tmux.conf"
 if os.path.exists(TMUX_CONF_PATH):
     # Hrmm, after running this script twice, the original tmux config is gone...
