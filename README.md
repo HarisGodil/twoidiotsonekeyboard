@@ -7,10 +7,12 @@ right user can press shift to get their half of the keyboard.
 The keys are match by reflecting over the center axis. For example, the
 letters 'q' and 'p' are a partners, responsible for creating the other.
 
-## How to install
+## How to Install / Run
 
-If you already have tmux installed, all you need to is run
-`generate_tmux_conf.py`
+To install, ensure tmux is installed, and then run
+`generate_tmux_conf.py` to generate the tmux config.
+
+To set this up, start tmux, and create an extra pane (`C-Space %`)
 
 
 ## Caveats and Quirks
