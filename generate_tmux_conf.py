@@ -56,24 +56,30 @@ def gen_right_keys(key):
         str(Key("C-" + upper(key.right), key.left,  1)),
     ]
 
-# Need to find a non-alphabet char to hold this
 tmux_conf = [
-    "set -g prefix C-q",
+    "set -g prefix C-Space",
     "unbind C-b",
-    "bind C-q send-prefix",
+    "bind C-Space send-prefix",
 ]
 
 for keymap in keys:
     tmux_conf += gen_left_keys(keymap)
     tmux_conf += gen_right_keys(keymap)
 
-# tmux doesn't seem to like using Enter as a command, but whatever
+# tmux doesn't like using Enter as a command, so remapping to ]
 tmux_conf += gen_right_keys(KeyMap("a", "]"))
 tmux_conf += [
     str(Key("]", "Enter", 1)),
     str(Key("}", "Enter", 1)),
     str(Key("C-]", "Enter", 1)),
     # C-} Doesn't exist apparently
+]
+
+# tmux doesn't like using Space as a command, so remapping to >
+tmux_conf += [
+    str(Key(",", "Space", 1)),
+    str(Key("<", "Space", 1)),
+    str(Key("C-,", "Space", 1)),
 ]
 
 TMUX_CONF_PATH = os.path.expanduser("~") + "/.tmux.conf"

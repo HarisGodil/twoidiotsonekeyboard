@@ -15,8 +15,13 @@ If you already have tmux installed, all you need to is run
 
 ## Caveats and Quirks
 
-Unfortunately the Enter key doesn't play nicely with tmux, so that key
-is on the pair 'a' & ']'.
+Unfortunately the Enter and Space keys don't play too nicely with tmux,
+so those keys are now pair like:
+
+Left    Right
+a       ] (In place of Enter)
+Space   ,
+
 
 I have also create a pairing between 'z' & '.', which skips over ',', but
 I think '.' is a more useful key to have
