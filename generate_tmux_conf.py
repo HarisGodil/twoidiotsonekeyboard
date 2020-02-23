@@ -3,13 +3,6 @@
 from collections import namedtuple
 import os
 
-"""
-Proof of concept tmux config
-
-bind -n q select-pane -t 1 \; send-keys b
-bind -n w select-pane -t 2 \; send-keys c
-"""
-
 KeyMap = namedtuple('keymap', ['left', 'right'])
 class Key(namedtuple('key', ['cmd', 'char', 'pane'])):
     __slots__ = ()
@@ -63,6 +56,7 @@ def gen_right_keys(key):
         str(Key("C-" + upper(key.right), key.left,  1)),
     ]
 
+# Need to find a non-alphabet char to hold this
 tmux_conf = [
     "set -g prefix C-q",
     "unbind C-b",
@@ -73,7 +67,7 @@ for keymap in keys:
     tmux_conf += gen_left_keys(keymap)
     tmux_conf += gen_right_keys(keymap)
 
-# tmux doesn't seem to like using space as a command, but whatever
+# tmux doesn't seem to like using Enter as a command, but whatever
 tmux_conf += gen_right_keys(KeyMap("a", "]"))
 tmux_conf += [
     str(Key("]", "Enter", 1)),
