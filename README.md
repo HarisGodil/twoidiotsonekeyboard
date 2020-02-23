@@ -27,6 +27,9 @@ I have also create a pairing between 'z' & '.', which skips over ',', but
 I think '.' is a more useful key to have
 
 
+I'm not super happy about any of the above quirks, so if you have any
+suggestions, let me know.
+
 ## Warnings
 
 This will probably destory your existing tmux conf, so please stash that
