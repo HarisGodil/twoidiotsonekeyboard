@@ -20,9 +20,10 @@ To set this up, start tmux, and create an extra pane (`C-Space %`)
 Unfortunately the Enter and Space keys don't play too nicely with tmux,
 so those keys are now pair like:
 
-Left    Right
-a       ] (In place of Enter)
-Space   ,
+| Left  | Right                 |
+|-------|-----------------------|
+| a     | ] (In place of Enter) |
+| Space | ,                     |
 
 
 I have also create a pairing between 'z' & '.', which skips over ',', but
