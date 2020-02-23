@@ -27,7 +27,7 @@ keys = [
    KeyMap('r','u'),
    KeyMap('t','y'),
    # Second Row
-   KeyMap('a','Enter'), # How does "enter" look like for command versus send-keys
+   KeyMap('a','Enter'), # a can press Enter, but for some reason Enter is always 'x'?
    KeyMap('s','l'),
    KeyMap('d','k'),
    KeyMap('f','j'),
@@ -39,22 +39,28 @@ keys = [
    KeyMap('v','b'),
 ]
 
+def upper(char):
+    # upper for these don't match Shift+key on the keyboard
+    if char == '.':
+        return '>'
+    return char.upper()
+
 def gen_left_keys(key):
     return [
         str(Key(key.left,        key.left,  0)),
         str(Key("C-" + key.left, key.right, 0)),
     ] + [ # And allow for these to work if the other user is pressing their command key
-        str(Key(key.left.upper(),        key.left,  0)),
-        str(Key("C-" + key.left.upper(), key.right, 0)),
+        str(Key(upper(key.left),        key.left,  0)),
+        str(Key("C-" + upper(key.left), key.right, 0)),
     ]
 
 def gen_right_keys(key):
     return [
-        str(Key(key.right,         key.right, 1)),
-        str(Key(key.right.upper(), key.left,  1)),
+        str(Key(key.right,        key.right, 1)),
+        str(Key(upper(key.right), key.left,  1)),
     ] + [ # And allow for these to work if the other user is pressing their command key
-        str(Key("C-" + key.right,         key.right, 1)),
-        str(Key("C-" + key.right.upper(), key.left,  1)),
+        str(Key("C-" + key.right,        key.right, 1)),
+        str(Key("C-" + upper(key.right), key.left,  1)),
     ]
 
 tmux_conf = [
