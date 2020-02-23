@@ -20,7 +20,7 @@ class Key(namedtuple('key', ['cmd', 'char', 'pane'])):
 
 keys = [
    # Do I care about numbers?
-   # First Row ; Do I care about []\?
+   # First Row
    KeyMap('q','p'),
    KeyMap('w','o'),
    KeyMap('e','i'),
@@ -33,23 +33,28 @@ keys = [
    KeyMap('f','j'),
    KeyMap('g','h'),
    # Third Row
-   KeyMap('z','.'), # How does "," look like for command versus send-keys
+   KeyMap('z','.'), # How does "." look like for command versus send-keys
    KeyMap('x','m'),
    KeyMap('c','n'),
    KeyMap('v','b'),
 ]
 
 def gen_left_keys(key):
-    # Also generate left_alt for when right_alt is also pressed
     return [
-        str(Key(key.left,      key.left,  1)),
-        str(Key("C-"+key.left, key.right, 1)),
+        str(Key(key.left,        key.left,  0)),
+        str(Key("C-" + key.left, key.right, 0)),
+    ] + [ # And allow for these to work if the other user is pressing their command key
+        str(Key(key.left.upper(),        key.left,  0)),
+        str(Key("C-" + key.left.upper(), key.right, 0)),
     ]
 
 def gen_right_keys(key):
     return [
-        str(Key(key.right,      key.right, 2)),
-        str(Key("C-"+key.right, key.left,  2)),
+        str(Key(key.right,         key.right, 1)),
+        str(Key(key.right.upper(), key.left,  1)),
+    ] + [ # And allow for these to work if the other user is pressing their command key
+        str(Key("C-" + key.right,         key.right, 1)),
+        str(Key("C-" + key.right.upper(), key.left,  1)),
     ]
 
 tmux_conf = [
@@ -62,8 +67,9 @@ for keymap in keys:
     tmux_conf += gen_left_keys(keymap)
     tmux_conf += gen_right_keys(keymap)
 
-TMUX_CONF_PATH = "~/.tmux.conf"
+TMUX_CONF_PATH = os.path.expanduser("~") + "/.tmux.conf"
 if os.path.exists(TMUX_CONF_PATH):
+    # Hrmm, after running this script twice, the original tmux config is gone...
     os.rename(TMUX_CONF_PATH, TMUX_CONF_PATH + ".old")
 with open(TMUX_CONF_PATH, 'w') as conf_file:
-    conf_file.writelines(tmux_conf)
+    conf_file.write("\n".join(tmux_conf))
